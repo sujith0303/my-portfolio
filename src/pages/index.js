@@ -62,7 +62,7 @@ export default function Portfolio() {
       <nav className="fixed top-0 w-full bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-700">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            SRB
+            BRS
           </div>
           <div className="flex gap-6">
             {['home', 'about', 'projects', 'skills', 'contact'].map((section) => (
