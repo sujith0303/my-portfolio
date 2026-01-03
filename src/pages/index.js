@@ -41,50 +41,51 @@ export default function Portfolio() {
     {
       title: "AI Interview Simulator",
       tags: ["Python", "LangChain", "RAG", "GPT4All"],
-      description: "Built an AI-driven interview simulator generating multi-round behavioral, technical, and coding questions for roles like Python Developer, Data Scientist, and ML Engineer.",
+      description: "Built an AI-driven interview simulator using Python and LangChain to generate multi-round behavioral, technical, and coding questions for roles like Python Developer, Data Scientist, and ML Engineer.",
       highlights: [
-        "Designed end-to-end LangChain workflow with Few-Shot and Chain-of-Thought prompts",
-        "Custom memory module for performance tracking and contextual hints",
-        "RAG component with ChromaDB and HuggingFace embeddings for real-time scoring (0-100)"
+        "Designed end-to-end LangChain workflow with Few-Shot and Chain-of-Thought prompts, sequential chains, and structured output parsing",
+        "Custom memory module to track performance and deliver contextual hints and targeted improvements",
+        "RAG component with ChromaDB, HuggingFace embeddings, and local GPT4All model for real-time scoring (0-100)"
       ]
     },
     {
       title: "SmartSupport AI - Customer Service Chatbot",
       tags: ["Python", "GPT4All", "NLP"],
-      description: "E-commerce customer service chatbot powered by local GPT4All LLM, handling 10 core support scenarios with 93/100 quality score.",
+      description: "E-commerce customer service chatbot powered by Python and a local GPT4All LLM, handling 10 core support scenarios and achieving a 93/100 quality score.",
       highlights: [
         "Rule-based evaluation system with 6 objective criteria and automated JSON reporting",
-        "Boosted chatbot quality from 2.6 to 9.3 through iterative prompt engineering",
-        "Defined roadmap for multi-turn conversations, web UI, and sentiment analysis"
+        "Boosted chatbot quality from 2.6 to 9.3 through iterative prompt engineering and testing",
+        "Future roadmap with multi-turn conversations, web chat UI, sentiment analysis, and multi-language features"
       ]
     },
     {
-      title: "Multi-Object Tracking Framework",
-      tags: ["YOLOv8", "ByteTrack", "OpenCV", "Computer Vision"],
-      description: "Traffic monitoring system using YOLOv8 and ByteTrack to detect, track, and count heavy vehicles across 53,485 frames.",
+      title: "Smart Surveillance System with Natural Language Querying",
+      tags: ["Python", "YOLOv8", "ByteTrack", "LangChain", "GPT4All", "FastAPI"],
+      description: "Smart surveillance system using YOLOv8, ByteTrack, and a LangChain RAG pipeline with ChromaDB and GPT4All to enable natural language querying of CCTV footage through a FastAPI backend.",
       highlights: [
-        "Achieved 95% detection accuracy using YOLOv8x with Re-ID logic",
-        "ByteTrack achieving sub-30ms tracking association time",
-        "90% counting accuracy with LineZone, extensible to multi-camera setups"
+        "Processed 2,782 detections and 321 tracks with 5,553 behavior events and 3,103 indexed items",
+        "Achieved 100% automated test success, around 30 FPS on GPU, and under 2-second query response time",
+        "Future improvements: real-time streaming, web dashboard UI, cloud deployment, alerting, and multi-camera support"
       ]
     },
     {
       title: "Microservices-Based Book Review Application",
       tags: ["Kubernetes", "Docker", "MongoDB", "REST APIs"],
-      description: "Book review platform with 3 microservices deployed on Kubernetes with persistent MongoDB storage.",
+      description: "Book review platform with 3 microservices (User, Review, Book) deployed on Kubernetes with Docker Hub, REST APIs, and persistent MongoDB storage.",
       highlights: [
-        "Achieved 99% uptime with horizontal pod autoscaling and health probes",
+        "Achieved 99% uptime with horizontal pod autoscaling, health probes, and load balancing across replicas",
         "Sub-second API response times with independent scaling",
-        "Extensible to recommendation engines and event-driven architecture"
+        "Extensible to recommendation engines, GraphQL gateway, event-driven architecture, and multi-cloud deployment"
       ]
     }
   ];
 
   const skills = {
     "Programming": ["Python", "C", "C++", "SQL"],
-    "ML/DL": ["TensorFlow", "Keras", "PyTorch", "scikit-learn", "OpenCV", "YOLOv8"],
-    "Cloud & DevOps": ["Kubernetes", "Docker", "REST APIs", "MongoDB", "Git/GitHub"],
-    "AI/ML Tech": ["LangChain", "OpenAI", "Prompt Engineering", "RAG", "ChromaDB", "Embeddings"]
+    "ML/DL": ["TensorFlow", "Keras", "PyTorch", "scikit-learn", "OpenCV", "YOLOv8", "ByteTrack"],
+    "Cloud & DevOps": ["Kubernetes", "Docker", "FastAPI", "MongoDB", "SQLite", "Git/GitHub"],
+    "AI/ML Technologies": ["LangChain", "GPT4All", "Prompt Engineering", "RAG", "Few-Shot Learning", "ChromaDB", "Vector Embeddings"],
+    "Domains": ["Computer Vision", "NLP", "CNNs", "Object Detection/Tracking", "Video Analytics", "Semantic Search", "AI Evaluation"]
   };
 
   const scrollToSection = (sectionId) => {
@@ -398,10 +399,6 @@ export default function Portfolio() {
                   <Mail size={24} />
                   bsujithreddy@gmail.com
                 </a>
-                <div className="flex items-center justify-center gap-3 text-lg" style={{ color: '#9CA3AF' }}>
-                  <MapPin size={24} />
-                  Karlskrona, Sweden
-                </div>
                 <div className="flex gap-4 justify-center mt-4">
                   <a href="https://github.com/sujith0303" target="_blank" rel="noopener noreferrer"
                      className="p-3 rounded-lg transition-all duration-300 hover:scale-110"
