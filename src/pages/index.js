@@ -1,462 +1,368 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, MapPin, Github, Linkedin, ChevronDown, Brain, Cloud, Database } from 'lucide-react';
+import { Mail, Github, Linkedin } from 'lucide-react';
 
 export default function Portfolio() {
-  const [isVisible, setIsVisible] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [showContent, setShowContent] = useState(false);
+  const [heroHover, setHeroHover] = useState(false);
+  const [eduHover, setEduHover] = useState(false);
 
   useEffect(() => {
+    // Add favicon dynamically
+    const favicon = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    favicon.type = 'image/x-icon';
+    favicon.rel = 'shortcut icon';
+    favicon.href = '/favicon.ico';
+    document.getElementsByTagName('head')[0].appendChild(favicon);
+
+    // Add title
+    document.title = 'BSR Portfolio - Sujith Reddy Bommareddy';
+
     // Loading animation
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
-
+      setTimeout(() => setShowContent(true), 100);
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setIsVisible(prev => ({
-            ...prev,
-            [entry.target.id]: true
-          }));
-        }
-      });
-    }, observerOptions);
-
-    const sections = document.querySelectorAll('section[id]');
-    sections.forEach(section => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, []);
-
-  const projects = [
-    {
-      title: "AI Interview Simulator",
-      tags: ["Python", "LangChain", "RAG", "GPT4All"],
-      description: "Built an AI-driven interview simulator using Python and LangChain to generate multi-round behavioral, technical, and coding questions for roles like Python Developer, Data Scientist, and ML Engineer.",
-      highlights: [
-        "Designed end-to-end LangChain workflow with Few-Shot and Chain-of-Thought prompts, sequential chains, and structured output parsing",
-        "Custom memory module to track performance and deliver contextual hints and targeted improvements",
-        "RAG component with ChromaDB, HuggingFace embeddings, and local GPT4All model for real-time scoring (0-100)"
-      ]
-    },
-    {
-      title: "SmartSupport AI - Customer Service Chatbot",
-      tags: ["Python", "GPT4All", "NLP"],
-      description: "E-commerce customer service chatbot powered by Python and a local GPT4All LLM, handling 10 core support scenarios and achieving a 93/100 quality score.",
-      highlights: [
-        "Rule-based evaluation system with 6 objective criteria and automated JSON reporting",
-        "Boosted chatbot quality from 2.6 to 9.3 through iterative prompt engineering and testing",
-        "Future roadmap with multi-turn conversations, web chat UI, sentiment analysis, and multi-language features"
-      ]
-    },
-    {
-      title: "Smart Surveillance System with Natural Language Querying",
-      tags: ["Python", "YOLOv8", "ByteTrack", "LangChain", "GPT4All", "FastAPI"],
-      description: "Smart surveillance system using YOLOv8, ByteTrack, and a LangChain RAG pipeline with ChromaDB and GPT4All to enable natural language querying of CCTV footage through a FastAPI backend.",
-      highlights: [
-        "Processed 2,782 detections and 321 tracks with 5,553 behavior events and 3,103 indexed items",
-        "Achieved 100% automated test success, around 30 FPS on GPU, and under 2-second query response time",
-        "Future improvements: real-time streaming, web dashboard UI, cloud deployment, alerting, and multi-camera support"
-      ]
-    },
-    {
-      title: "Microservices-Based Book Review Application",
-      tags: ["Kubernetes", "Docker", "MongoDB", "REST APIs"],
-      description: "Book review platform with 3 microservices (User, Review, Book) deployed on Kubernetes with Docker Hub, REST APIs, and persistent MongoDB storage.",
-      highlights: [
-        "Achieved 99% uptime with horizontal pod autoscaling, health probes, and load balancing across replicas",
-        "Sub-second API response times with independent scaling",
-        "Extensible to recommendation engines, GraphQL gateway, event-driven architecture, and multi-cloud deployment"
-      ]
-    }
-  ];
-
-  const skills = {
-    "Programming": ["Python", "C", "C++", "SQL"],
-    "ML/DL": ["TensorFlow", "Keras", "PyTorch", "scikit-learn", "OpenCV", "YOLOv8", "ByteTrack"],
-    "Cloud & DevOps": ["Kubernetes", "Docker", "FastAPI", "MongoDB", "SQLite", "Git/GitHub"],
-    "AI/ML Technologies": ["LangChain", "GPT4All", "Prompt Engineering", "RAG", "Few-Shot Learning", "ChromaDB", "Vector Embeddings"],
-    "Domains": ["Computer Vision", "NLP", "CNNs", "Object Detection/Tracking", "Video Analytics", "Semantic Search", "AI Evaluation"]
-  };
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <>
       {/* Loading Screen */}
-      <div className={`fixed inset-0 z-[9999] flex items-center justify-center transition-all duration-1000 ${isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} style={{ backgroundColor: '#0F172A' }}>
+      <div className={`fixed inset-0 z-[9999] flex items-center justify-center transition-all duration-1000 ${isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} style={{ backgroundColor: '#020617' }}>
         <div className="text-center">
-          <div className="relative mb-8">
-            <div className="w-24 h-24 border-4 rounded-full animate-spin mx-auto" style={{ borderColor: 'rgba(56, 189, 248, 0.2)', borderTopColor: '#38BDF8' }}></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-4xl font-bold animate-pulse" style={{ 
-                background: 'linear-gradient(to right, #38BDF8, #7DD3FC)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
-                BSR
-              </div>
-            </div>
+          <div className="text-5xl font-bold mb-4 animate-pulse" style={{ color: '#22D3EE' }}>
+            BSR
           </div>
-          <div className="flex items-center justify-center space-x-2">
-            <div className="w-3 h-3 rounded-full animate-bounce" style={{ backgroundColor: '#38BDF8', animationDelay: '0s' }}></div>
-            <div className="w-3 h-3 rounded-full animate-bounce" style={{ backgroundColor: '#38BDF8', animationDelay: '0.2s' }}></div>
-            <div className="w-3 h-3 rounded-full animate-bounce" style={{ backgroundColor: '#38BDF8', animationDelay: '0.4s' }}></div>
+          <div className="flex gap-2 justify-center">
+            <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#22D3EE', animationDelay: '0s' }}></div>
+            <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#38BDF8', animationDelay: '0.2s' }}></div>
+            <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#22D3EE', animationDelay: '0.4s' }}></div>
           </div>
-          <p className="mt-4 animate-pulse" style={{ color: '#9CA3AF' }}>Loading Portfolio...</p>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className={`min-h-screen text-white transition-all duration-1000 ease-out ${isLoading ? 'opacity-0' : 'opacity-100'}`} style={{ backgroundColor: '#0F172A', color: '#E5E7EB' }}>
+      <div className={`min-h-screen transition-all duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`} style={{ backgroundColor: '#020617' }}>
         {/* Navigation */}
-        <nav className="fixed top-0 w-full backdrop-blur-md z-50 border-b animate-fade-in" style={{ backgroundColor: 'rgba(15, 23, 42, 0.8)', borderColor: 'rgba(56, 189, 248, 0.3)' }}>
-          <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <button
-              onClick={() => scrollToSection('home')}
-              className="text-xl font-bold cursor-pointer transition-all duration-300 hover:scale-110"
-              style={{ 
-                background: 'linear-gradient(to right, #38BDF8, #7DD3FC)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              BSR
-            </button>
-            <div className="flex gap-6">
-              {['home', 'about', 'projects', 'skills', 'contact'].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className="capitalize transition-all duration-300 hover:scale-110"
-                  style={{ color: '#E5E7EB' }}
-                  onMouseEnter={(e) => e.target.style.color = '#38BDF8'}
-                  onMouseLeave={(e) => e.target.style.color = '#E5E7EB'}
-                >
-                  {section}
-                </button>
-              ))}
-            </div>
+        <nav className={`fixed top-0 left-0 right-0 z-50 px-8 py-6 flex justify-between items-center transition-all duration-700 ${showContent ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`} style={{ backgroundColor: 'rgba(2, 6, 23, 0.8)', backdropFilter: 'blur(10px)' }}>
+          <a href="#home" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-2xl font-bold cursor-pointer" style={{ color: '#22D3EE' }}>
+            BSR
+          </a>
+          <div className="flex gap-8" style={{ color: '#94A3B8' }}>
+            <a href="#home" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="transition-colors cursor-pointer" style={{ color: '#94A3B8' }} onMouseEnter={(e) => e.target.style.color = '#22D3EE'} onMouseLeave={(e) => e.target.style.color = '#94A3B8'}>Home</a>
+            <a href="#projects" onClick={(e) => { e.preventDefault(); document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }); }} className="transition-colors cursor-pointer" style={{ color: '#94A3B8' }} onMouseEnter={(e) => e.target.style.color = '#22D3EE'} onMouseLeave={(e) => e.target.style.color = '#94A3B8'}>Projects</a>
+            <a href="#skills" onClick={(e) => { e.preventDefault(); document.getElementById('skills').scrollIntoView({ behavior: 'smooth' }); }} className="transition-colors cursor-pointer" style={{ color: '#94A3B8' }} onMouseEnter={(e) => e.target.style.color = '#22D3EE'} onMouseLeave={(e) => e.target.style.color = '#94A3B8'}>Skills</a>
+            <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); }} className="transition-colors cursor-pointer" style={{ color: '#94A3B8' }} onMouseEnter={(e) => e.target.style.color = '#22D3EE'} onMouseLeave={(e) => e.target.style.color = '#94A3B8'}>Contact</a>
           </div>
         </nav>
 
-        {/* Hero Section */}
-        <section id="home" className="min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
-          <div className="max-w-4xl text-center">
-            <div className={`mb-6 transition-all duration-700 ${!isLoading ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.3s' }}>
-              <div className="inline-block px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-400 text-sm mb-4">
-                AI/ML Engineer
-              </div>
-            </div>
-            <h1 className={`text-6xl font-bold mb-6 bg-gradient-to-r from-emerald-400 via-teal-400 to-amber-400 bg-clip-text text-transparent transition-all duration-700 ${!isLoading ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.5s' }}>
-              Sujith Reddy Bommareddy
-            </h1>
-            <p className={`text-xl text-slate-300 mb-8 transition-all duration-700 ${!isLoading ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.7s' }}>
-              Masters in Computer Science @ Blekinge Institute of Technology
-            </p>
-            <p className={`text-lg text-slate-400 max-w-2xl mx-auto mb-8 transition-all duration-700 ${!isLoading ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.9s' }}>
-              Specializing in AI/ML, Computer Vision, and NLP. Building intelligent systems with LangChain, RAG, and deep learning frameworks.
-            </p>
-            <div className={`flex gap-4 justify-center mb-12 transition-all duration-700 ${!isLoading ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '1.1s' }}>
-              <a href="https://github.com/sujith0303" target="_blank" rel="noopener noreferrer" 
-                 className="flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105"
-                 style={{ backgroundColor: '#111827', boxShadow: '0 0 20px rgba(56, 189, 248, 0.2)' }}
-                 onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 40px rgba(56, 189, 248, 0.4)'}
-                 onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(56, 189, 248, 0.2)'}
-              >
-                <Github size={20} />
-                GitHub
-              </a>
-              <a href="https://linkedin.com/in/sujith-reddy-bommareddy-8b75572b8" target="_blank" rel="noopener noreferrer"
-                 className="flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105"
-                 style={{ backgroundColor: '#38BDF8', color: '#0F172A', boxShadow: '0 0 30px rgba(56, 189, 248, 0.4)' }}
-                 onMouseEnter={(e) => {
-                   e.currentTarget.style.backgroundColor = '#7DD3FC';
-                   e.currentTarget.style.boxShadow = '0 0 50px rgba(56, 189, 248, 0.6)';
-                 }}
-                 onMouseLeave={(e) => {
-                   e.currentTarget.style.backgroundColor = '#38BDF8';
-                   e.currentTarget.style.boxShadow = '0 0 30px rgba(56, 189, 248, 0.4)';
-                 }}
-              >
-                <Linkedin size={20} />
-                LinkedIn
-              </a>
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
-                 className="flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105"
-                 style={{ backgroundColor: '#111827', boxShadow: '0 0 20px rgba(56, 189, 248, 0.2)', border: '1px solid rgba(56, 189, 248, 0.3)' }}
-                 onMouseEnter={(e) => {
-                   e.currentTarget.style.boxShadow = '0 0 40px rgba(56, 189, 248, 0.4)';
-                   e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.6)';
-                 }}
-                 onMouseLeave={(e) => {
-                   e.currentTarget.style.boxShadow = '0 0 20px rgba(56, 189, 248, 0.2)';
-                   e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.3)';
-                 }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                Resume
-              </a>
-            </div>
-            <button 
-              onClick={() => scrollToSection('projects')}
-              className={`animate-bounce transition-all duration-700 ${!isLoading ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} 
-              style={{ transitionDelay: '1.3s', color: '#9CA3AF' }}
-              onMouseEnter={(e) => e.target.style.color = '#E5E7EB'}
-              onMouseLeave={(e) => e.target.style.color = '#9CA3AF'}
-            >
-              <ChevronDown size={32} />
-            </button>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <section 
-          id="about" 
-          className={`min-h-screen flex items-center justify-center px-6 py-20 transition-all duration-1000 ${
-            isVisible.about ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
-        >
-          <div className="max-w-4xl">
-            <h2 className="text-4xl font-bold mb-8 text-center">About Me</h2>
-            <div className="backdrop-blur rounded-2xl p-8 border transition-all duration-300" style={{ 
-              backgroundColor: 'rgba(17, 24, 39, 0.5)', 
-              borderColor: 'rgba(56, 189, 248, 0.3)',
-              boxShadow: '0 0 20px rgba(56, 189, 248, 0.2)'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.6)';
-              e.currentTarget.style.boxShadow = '0 0 40px rgba(56, 189, 248, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.3)';
-              e.currentTarget.style.boxShadow = '0 0 20px rgba(56, 189, 248, 0.2)';
-            }}
-            >
-              <p className="text-lg mb-6" style={{ color: '#E5E7EB' }}>
-                I'm a Computer Science graduate student at Blekinge Institute of Technology in Sweden, with a strong foundation in AI/ML and software engineering from JNTU Hyderabad.
-              </p>
-              <p className="text-lg mb-6" style={{ color: '#E5E7EB' }}>
-                My work focuses on building practical AI applications, from interview simulators using LangChain and RAG to real-time computer vision systems for traffic monitoring. I'm passionate about leveraging cutting-edge technologies like prompt engineering, vector embeddings, and transformer models to solve real-world problems.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-                <div className="flex items-start gap-3 p-4 rounded-lg transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)' }}>
-                  <Brain style={{ color: '#38BDF8' }} className="mt-1" size={24} />
+        {/* Hero Section - Bento Grid */}
+        <div className="pt-32 pb-20 px-8 max-w-7xl mx-auto" id="home">
+          <div className="grid grid-cols-12 gap-4 auto-rows-auto">
+            
+            {/* Hero Card - Large */}
+            <div 
+                 className={`col-span-12 md:col-span-7 rounded-3xl p-8 relative overflow-hidden ${showContent ? 'opacity-100' : 'opacity-0'}`}
+                 onMouseEnter={() => setHeroHover(true)}
+                 onMouseLeave={() => setHeroHover(false)}
+                 style={{ 
+                   backgroundColor: '#0F172A',
+                   boxShadow: heroHover ? '0 8px 40px rgba(34, 211, 238, 0.3)' : '0 4px 24px rgba(34, 211, 238, 0.1)',
+                   minHeight: '400px',
+                   transform: heroHover ? 'translateY(-4px)' : 'translateY(0)',
+                   transition: 'all 0.3s ease, opacity 0.7s ease 0.1s'
+                 }}>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl" style={{ backgroundColor: '#22D3EE', color: '#020617' }}>
+                    B
+                  </div>
                   <div>
-                    <h3 className="font-semibold mb-1" style={{ color: '#E5E7EB' }}>AI/ML Focus</h3>
-                    <p className="text-sm" style={{ color: '#9CA3AF' }}>Computer Vision, NLP, Deep Learning</p>
+                    <div className="font-semibold" style={{ color: '#E5E7EB' }}>Hi, I'm Sujith.</div>
+                    <div className="text-sm" style={{ color: '#94A3B8' }}>AI/ML Engineer</div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-4 rounded-lg transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)' }}>
-                  <Cloud style={{ color: '#38BDF8' }} className="mt-1" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-1" style={{ color: '#E5E7EB' }}>Cloud & DevOps</h3>
-                    <p className="text-sm" style={{ color: '#9CA3AF' }}>Kubernetes, Docker, Microservices</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-4 rounded-lg transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)' }}>
-                  <Database style={{ color: '#38BDF8' }} className="mt-1" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-1" style={{ color: '#E5E7EB' }}>Data Engineering</h3>
-                    <p className="text-sm" style={{ color: '#9CA3AF' }}>MongoDB, Vector DBs, REST APIs</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Projects Section */}
-        <section 
-          id="projects" 
-          className={`min-h-screen px-6 py-20 transition-all duration-1000 ${
-            isVisible.projects ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
-        >
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold mb-12 text-center">Featured Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {projects.map((project, idx) => (
-                <div 
-                  key={idx} 
-                  className="bg-slate-800/50 backdrop-blur rounded-2xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/10"
-                  style={{ 
-                    animationDelay: `${idx * 0.1}s`,
-                    animation: isVisible.projects ? 'fadeInUp 0.6s ease-out forwards' : 'none'
-                  }}
-                >
-                  <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, i) => (
-                      <span key={i} className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full text-xs hover:bg-blue-500/20 transition-colors">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-slate-300 mb-4">{project.description}</p>
-                  <ul className="space-y-2">
-                    {project.highlights.map((highlight, i) => (
-                      <li key={i} className="text-sm text-slate-400 flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Skills Section */}
-        <section 
-          id="skills" 
-          className={`min-h-screen flex items-center justify-center px-6 py-20 transition-all duration-1000 ${
-            isVisible.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
-        >
-          <div className="max-w-4xl w-full">
-            <h2 className="text-4xl font-bold mb-12 text-center">Technical Skills</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {Object.entries(skills).map(([category, items], idx) => (
-                <div 
-                  key={category} 
-                  className="bg-slate-800/50 backdrop-blur rounded-2xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/10"
-                  style={{ 
-                    animationDelay: `${idx * 0.1}s`,
-                    animation: isVisible.skills ? 'fadeInUp 0.6s ease-out forwards' : 'none'
-                  }}
-                >
-                  <h3 className="text-xl font-bold mb-4 text-blue-400">{category}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {items.map((skill, i) => (
-                      <span key={i} className="px-4 py-2 bg-slate-700/50 rounded-lg text-sm hover:bg-slate-700 hover:scale-110 transition-all duration-200">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section 
-          id="contact" 
-          className={`min-h-screen flex items-center justify-center px-6 py-20 transition-all duration-1000 ${
-            isVisible.contact ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
-        >
-          <div className="max-w-2xl w-full text-center">
-            <h2 className="text-4xl font-bold mb-8">Get In Touch</h2>
-            <p className="text-lg text-slate-300 mb-8">
-              I'm currently open to opportunities in AI/ML engineering, computer vision, and software development. Let's connect!
-            </p>
-            <div className="backdrop-blur rounded-2xl p-8 border transition-all duration-300" style={{ 
-              backgroundColor: 'rgba(17, 24, 39, 0.5)',
-              borderColor: 'rgba(56, 189, 248, 0.3)',
-              boxShadow: '0 0 20px rgba(56, 189, 248, 0.2)'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.6)';
-              e.currentTarget.style.boxShadow = '0 0 40px rgba(56, 189, 248, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.3)';
-              e.currentTarget.style.boxShadow = '0 0 20px rgba(56, 189, 248, 0.2)';
-            }}
-            >
-              <div className="flex flex-col gap-4">
-                <a href="mailto:bsujithreddy@gmail.com" 
-                   className="flex items-center justify-center gap-3 text-lg transition-all duration-300 hover:scale-110"
-                   style={{ color: '#E5E7EB' }}
-                   onMouseEnter={(e) => e.currentTarget.style.color = '#38BDF8'}
-                   onMouseLeave={(e) => e.currentTarget.style.color = '#E5E7EB'}
-                >
-                  <Mail size={24} />
-                  bsujithreddy@gmail.com
-                </a>
-                <div className="flex gap-4 justify-center mt-4">
-                  <a href="https://github.com/sujith0303" target="_blank" rel="noopener noreferrer"
-                     className="p-3 rounded-lg transition-all duration-300 hover:scale-110"
-                     style={{ backgroundColor: '#111827', boxShadow: '0 0 20px rgba(56, 189, 248, 0.2)' }}
-                     onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 40px rgba(56, 189, 248, 0.5)'}
-                     onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(56, 189, 248, 0.2)'}
-                  >
+                <h1 className="text-5xl font-bold mb-4 leading-tight" style={{ color: '#E5E7EB' }}>
+                  Passionate to pursue<br />the technology.
+                </h1>
+                <p className="text-lg max-w-md" style={{ color: '#94A3B8' }}>
+                  I enjoy learning new things and try to overcome new challenges while analyzing how I improved through them.
+                </p>
+                <div className="flex gap-4 mt-6">
+                  <a href="https://github.com/sujith0303" target="_blank" rel="noopener noreferrer" 
+                     className="transition-colors" style={{ color: '#94A3B8' }}
+                     onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
+                     onMouseLeave={(e) => e.currentTarget.style.color = '#94A3B8'}>
                     <Github size={24} />
                   </a>
                   <a href="https://linkedin.com/in/sujith-reddy-bommareddy-8b75572b8" target="_blank" rel="noopener noreferrer"
-                     className="p-3 rounded-lg transition-all duration-300 hover:scale-110"
-                     style={{ backgroundColor: '#111827', boxShadow: '0 0 20px rgba(56, 189, 248, 0.2)' }}
-                     onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 40px rgba(56, 189, 248, 0.5)'}
-                     onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(56, 189, 248, 0.2)'}
-                  >
+                     className="transition-colors" style={{ color: '#94A3B8' }}
+                     onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
+                     onMouseLeave={(e) => e.currentTarget.style.color = '#94A3B8'}>
                     <Linkedin size={24} />
+                  </a>
+                  <a href="mailto:bsujithreddy@gmail.com"
+                     className="transition-colors" style={{ color: '#94A3B8' }}
+                     onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
+                     onMouseLeave={(e) => e.currentTarget.style.color = '#94A3B8'}>
+                    <Mail size={24} />
+                  </a>
+                  <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
+                     className="transition-colors" style={{ color: '#94A3B8' }}
+                     onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
+                     onMouseLeave={(e) => e.currentTarget.style.color = '#94A3B8'}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                    </svg>
                   </a>
                 </div>
               </div>
             </div>
+
+            {/* Education Card */}
+            <div 
+                 className={`col-span-12 md:col-span-5 rounded-3xl p-8 relative overflow-hidden ${showContent ? 'opacity-100' : 'opacity-0'}`}
+                 onMouseEnter={() => setEduHover(true)}
+                 onMouseLeave={() => setEduHover(false)}
+                 style={{ 
+                   backgroundColor: '#0F172A',
+                   boxShadow: eduHover ? '0 8px 40px rgba(34, 211, 238, 0.3)' : '0 4px 24px rgba(34, 211, 238, 0.1)',
+                   minHeight: '300px',
+                   transform: eduHover ? 'translateY(-4px)' : 'translateY(0)',
+                   transition: 'all 0.3s ease, opacity 0.7s ease 0.3s'
+                 }}>
+              <div className="text-xl mb-4" style={{ color: '#94A3B8' }}>Currently I'm</div>
+              <h3 className="text-4xl font-bold mb-4" style={{ color: '#E5E7EB' }}>
+                Pursuing Masters
+              </h3>
+              <p className="text-lg" style={{ color: '#94A3B8' }}>
+                Building knowledge in AI/ML and Computer Vision at Blekinge Institute of Technology.
+              </p>
+              <div className="absolute bottom-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20" style={{ backgroundColor: '#22D3EE' }}></div>
+            </div>
+
           </div>
-        </section>
+        </div>
+
+        {/* Projects Section */}
+        <div className={`py-20 px-8 max-w-7xl mx-auto transition-all duration-700 delay-500 ${showContent ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} id="projects">
+          <h2 className="text-4xl font-bold mb-8" style={{ color: '#E5E7EB' }}>Featured Projects</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                title: "AI Interview Simulator",
+                desc: "LangChain-powered interview platform with RAG and GPT4All for real-time scoring",
+                tags: ["Python", "LangChain", "RAG"]
+              },
+              {
+                title: "SmartSupport AI Chatbot",
+                desc: "E-commerce customer service with 93/100 quality score using GPT4All",
+                tags: ["Python", "GPT4All", "NLP"]
+              },
+              {
+                title: "Smart Surveillance System",
+                desc: "Natural language querying for CCTV with YOLOv8 and ByteTrack integration",
+                tags: ["Python", "YOLO", "ByteTrack"]
+              },
+              {
+                title: "Microservices Book Review",
+                desc: "Scalable platform with 99% uptime using Kubernetes and Docker",
+                tags: ["Kubernetes", "Docker", "MongoDB"]
+              }
+            ].map((project, idx) => (
+              <div key={idx} className="rounded-3xl p-8 transition-all group" 
+                   style={{ 
+                     backgroundColor: '#0F172A',
+                     boxShadow: '0 4px 24px rgba(34, 211, 238, 0.05)',
+                     border: '1px solid rgba(34, 211, 238, 0.1)'
+                   }}
+                   onMouseEnter={(e) => {
+                     e.currentTarget.style.boxShadow = '0 8px 32px rgba(34, 211, 238, 0.15)';
+                     e.currentTarget.style.borderColor = 'rgba(34, 211, 238, 0.3)';
+                   }}
+                   onMouseLeave={(e) => {
+                     e.currentTarget.style.boxShadow = '0 4px 24px rgba(34, 211, 238, 0.05)';
+                     e.currentTarget.style.borderColor = 'rgba(34, 211, 238, 0.1)';
+                   }}>
+                <h3 className="text-2xl font-bold mb-2" style={{ color: '#E5E7EB' }}>{project.title}</h3>
+                <p className="mb-4" style={{ color: '#94A3B8' }}>{project.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="px-3 py-1 rounded-full text-xs" 
+                          style={{ backgroundColor: 'rgba(34, 211, 238, 0.1)', color: '#22D3EE' }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Skills Section */}
+        <div className={`py-20 px-8 max-w-7xl mx-auto transition-all duration-700 delay-700 ${showContent ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} id="skills">
+          <div className="rounded-3xl p-8 transition-all" 
+               style={{ 
+                 backgroundColor: '#0F172A',
+                 boxShadow: '0 4px 24px rgba(34, 211, 238, 0.1)'
+               }}
+               onMouseEnter={(e) => {
+                 e.currentTarget.style.boxShadow = '0 8px 40px rgba(34, 211, 238, 0.3)';
+                 e.currentTarget.style.transform = 'translateY(-4px)';
+               }}
+               onMouseLeave={(e) => {
+                 e.currentTarget.style.boxShadow = '0 4px 24px rgba(34, 211, 238, 0.1)';
+                 e.currentTarget.style.transform = 'translateY(0)';
+               }}>
+            <h2 className="text-4xl font-bold mb-8" style={{ color: '#E5E7EB' }}>Technical Skills</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="p-6 rounded-xl" style={{ backgroundColor: 'rgba(34, 211, 238, 0.05)' }}>
+                <h4 className="font-bold mb-4" style={{ color: '#22D3EE' }}>Programming</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['Python', 'C', 'C++', 'SQL'].map(skill => (
+                    <span key={skill} className="px-3 py-1 rounded-lg text-sm" style={{ backgroundColor: '#020617', color: '#94A3B8' }}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="p-6 rounded-xl" style={{ backgroundColor: 'rgba(34, 211, 238, 0.05)' }}>
+                <h4 className="font-bold mb-4" style={{ color: '#22D3EE' }}>ML/DL</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['TensorFlow', 'Keras', 'PyTorch', 'scikit-learn', 'OpenCV', 'YOLOv8', 'ByteTrack'].map(skill => (
+                    <span key={skill} className="px-3 py-1 rounded-lg text-sm" style={{ backgroundColor: '#020617', color: '#94A3B8' }}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="p-6 rounded-xl" style={{ backgroundColor: 'rgba(34, 211, 238, 0.05)' }}>
+                <h4 className="font-bold mb-4" style={{ color: '#22D3EE' }}>Cloud & DevOps</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['Kubernetes', 'Docker', 'FastAPI', 'MongoDB', 'SQLite', 'Git/GitHub'].map(skill => (
+                    <span key={skill} className="px-3 py-1 rounded-lg text-sm" style={{ backgroundColor: '#020617', color: '#94A3B8' }}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="p-6 rounded-xl" style={{ backgroundColor: 'rgba(34, 211, 238, 0.05)' }}>
+                <h4 className="font-bold mb-4" style={{ color: '#22D3EE' }}>AI/ML Technologies</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['LangChain', 'GPT4All', 'Prompt Engineering', 'RAG', 'Few-Shot Learning', 'ChromaDB', 'Vector Embeddings'].map(skill => (
+                    <span key={skill} className="px-3 py-1 rounded-lg text-sm" style={{ backgroundColor: '#020617', color: '#94A3B8' }}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="p-6 rounded-xl md:col-span-2" style={{ backgroundColor: 'rgba(34, 211, 238, 0.05)' }}>
+                <h4 className="font-bold mb-4" style={{ color: '#22D3EE' }}>Domains</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['Computer Vision', 'NLP', 'CNNs', 'Object Detection/Tracking', 'Video Analytics', 'Semantic Search', 'AI Evaluation'].map(skill => (
+                    <span key={skill} className="px-3 py-1 rounded-lg text-sm" style={{ backgroundColor: '#020617', color: '#94A3B8' }}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Section */}
+        <div className={`py-20 px-8 max-w-7xl mx-auto transition-all duration-700 delay-1000 ${showContent ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} id="contact">
+          <div className="rounded-3xl p-12 relative overflow-hidden transition-all" 
+               style={{ 
+                 backgroundColor: '#0F172A',
+                 boxShadow: '0 4px 24px rgba(34, 211, 238, 0.2)',
+                 border: '1px solid rgba(34, 211, 238, 0.2)'
+               }}
+               onMouseEnter={(e) => {
+                 e.currentTarget.style.boxShadow = '0 8px 40px rgba(34, 211, 238, 0.4)';
+                 e.currentTarget.style.transform = 'translateY(-4px)';
+               }}
+               onMouseLeave={(e) => {
+                 e.currentTarget.style.boxShadow = '0 4px 24px rgba(34, 211, 238, 0.2)';
+                 e.currentTarget.style.transform = 'translateY(0)';
+               }}>
+            <div className="relative z-10">
+              <h2 className="text-4xl font-bold mb-4" style={{ color: '#E5E7EB' }}>Get In Touch</h2>
+              <p className="text-lg mb-8 max-w-2xl" style={{ color: '#94A3B8' }}>
+                I'm currently open to opportunities in AI/ML engineering, computer vision, and software development. Let's connect!
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
+                <a href="mailto:bsujithreddy@gmail.com" 
+                   className="flex items-center gap-4 p-6 rounded-2xl transition-all"
+                   style={{ backgroundColor: 'rgba(34, 211, 238, 0.05)', border: '1px solid rgba(34, 211, 238, 0.1)' }}
+                   onMouseEnter={(e) => {
+                     e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.1)';
+                     e.currentTarget.style.borderColor = 'rgba(34, 211, 238, 0.3)';
+                   }}
+                   onMouseLeave={(e) => {
+                     e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.05)';
+                     e.currentTarget.style.borderColor = 'rgba(34, 211, 238, 0.1)';
+                   }}>
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'rgba(34, 211, 238, 0.2)' }}>
+                    <Mail size={24} style={{ color: '#22D3EE' }} />
+                  </div>
+                  <div>
+                    <div className="text-sm" style={{ color: '#94A3B8' }}>Email</div>
+                    <div className="font-medium" style={{ color: '#E5E7EB' }}>Get in touch</div>
+                  </div>
+                </a>
+                <a href="https://linkedin.com/in/sujith-reddy-bommareddy-8b75572b8" 
+                   target="_blank" rel="noopener noreferrer"
+                   className="flex items-center gap-4 p-6 rounded-2xl transition-all"
+                   style={{ backgroundColor: 'rgba(34, 211, 238, 0.05)', border: '1px solid rgba(34, 211, 238, 0.1)' }}
+                   onMouseEnter={(e) => {
+                     e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.1)';
+                     e.currentTarget.style.borderColor = 'rgba(34, 211, 238, 0.3)';
+                   }}
+                   onMouseLeave={(e) => {
+                     e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.05)';
+                     e.currentTarget.style.borderColor = 'rgba(34, 211, 238, 0.1)';
+                   }}>
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'rgba(34, 211, 238, 0.2)' }}>
+                    <Linkedin size={24} style={{ color: '#22D3EE' }} />
+                  </div>
+                  <div>
+                    <div className="text-sm" style={{ color: '#94A3B8' }}>LinkedIn</div>
+                    <div className="font-medium" style={{ color: '#E5E7EB' }}>Connect</div>
+                  </div>
+                </a>
+                <a href="https://github.com/sujith0303" 
+                   target="_blank" rel="noopener noreferrer"
+                   className="flex items-center gap-4 p-6 rounded-2xl transition-all"
+                   style={{ backgroundColor: 'rgba(34, 211, 238, 0.05)', border: '1px solid rgba(34, 211, 238, 0.1)' }}
+                   onMouseEnter={(e) => {
+                     e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.1)';
+                     e.currentTarget.style.borderColor = 'rgba(34, 211, 238, 0.3)';
+                   }}
+                   onMouseLeave={(e) => {
+                     e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.05)';
+                     e.currentTarget.style.borderColor = 'rgba(34, 211, 238, 0.1)';
+                   }}>
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'rgba(34, 211, 238, 0.2)' }}>
+                    <Github size={24} style={{ color: '#22D3EE' }} />
+                  </div>
+                  <div>
+                    <div className="text-sm" style={{ color: '#94A3B8' }}>GitHub</div>
+                    <div className="font-medium" style={{ color: '#E5E7EB' }}>View projects</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-10" style={{ backgroundColor: '#22D3EE' }}></div>
+          </div>
+        </div>
 
         {/* Footer */}
-        <footer className="border-t py-8 text-center" style={{ borderColor: 'rgba(56, 189, 248, 0.3)', color: '#9CA3AF' }}>
-          <p>© 2025 Sujith Reddy Bommareddy. Built with Gatsby & React.</p>
+        <footer className="py-8 text-center" style={{ color: '#94A3B8', borderTop: '1px solid #0F172A' }}>
+          <p>© 2026 Sujith Reddy Bommareddy.</p>
         </footer>
-
-        <style jsx>{`
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(30px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          @keyframes fade-in {
-            from {
-              opacity: 0;
-            }
-            to {
-              opacity: 1;
-            }
-          }
-
-          .animate-fade-in {
-            animation: fade-in 0.6s ease-out;
-          }
-
-          .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
-            opacity: 0;
-          }
-        `}</style>
       </div>
     </>
   );
